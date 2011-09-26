@@ -6,8 +6,8 @@ module GitMedia
       can_download = false # TODO: read this from config and implement
       
       # read checksum size
-      sha = STDIN.read(41)
-      if STDIN.eof? && sha[40, 1] == "\n"
+      sha = STDIN.readline(64).strip # read no more than 64 bytes
+      if STDIN.eof? && sha.length == 40 && sha.match(/^[0-9a-fA-F]+$/) != nil
         # this is a media file
         media_file = File.join(media_buffer, sha.chomp)
         if File.exists?(media_file)
@@ -25,7 +25,8 @@ module GitMedia
           end
         end
       else
-        # if more than 40 chars, just output
+        # if it is not a 40 character long hash, just output
+        STDERR.puts('Unknown git-media file format')
         print sha
         while data = STDIN.read(4096)
           print data

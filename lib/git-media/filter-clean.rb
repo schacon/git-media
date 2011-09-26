@@ -24,7 +24,9 @@ module GitMedia
       tempfile.close
 
       # calculate and print the SHA of the data
-      puts hx = hashfunc.hexdigest 
+      STDOUT.print hx = hashfunc.hexdigest 
+      STDOUT.binmode
+      STDOUT.write("\n")
 
       # move the tempfile to our media buffer area
       media_file = File.join(media_buffer, hx)
