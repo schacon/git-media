@@ -31,6 +31,7 @@ module GitMedia
       user = `git config git-media.scpuser`.chomp
       host = `git config git-media.scphost`.chomp
       path = `git config git-media.scppath`.chomp
+      port = `git config git-media.scpport`.chomp
       if user === ""
 	raise "git-media.scpuser not set for scp transport"
       end
@@ -40,7 +41,7 @@ module GitMedia
       if path === ""
 	raise "git-media.scppath not set for scp transport"
       end
-      GitMedia::Transport::Scp.new(user, host, path)
+      GitMedia::Transport::Scp.new(user, host, path, port)
 
     when "local"
       path = `git config git-media.localpath`.chomp
@@ -93,7 +94,14 @@ module GitMedia
           end
           GitMedia::Status.run!
         else
-          raise "unknown media subcommand #{cmd.inspect}"
+	  print <<EOF
+usage: git media sync|status|clear
+
+  sync		Sync files with remote server
+  status	Show files that are waiting to be uploaded and file size
+  clear		Upload and delete the local cache of media files
+
+EOF
         end
       
     end

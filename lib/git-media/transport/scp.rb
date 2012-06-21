@@ -11,14 +11,20 @@ module GitMedia
   module Transport
     class Scp < Base
 
-      def initialize(user, host, path)
+      def initialize(user, host, path, port)
 	@user = user
 	@host = host
         @path = path
+	unless port === ""
+	  @sshport = "-p#{port}"
+	end
+	unless port === ""
+	  @scpport = "-P#{port}"
+	end
       end
 
       def exist?(file)
-	if `ssh #{@user}@#{@host} [ -f "#{file}" ] && echo 1 || echo 0`.chomp == "1"
+	if `ssh #{@user}@#{@host} #{@sshport} [ -f "#{file}" ] && echo 1 || echo 0`.chomp == "1"
 	  puts file + " exists"
 	  return true
 	else
@@ -33,7 +39,7 @@ module GitMedia
 
       def get_file(sha, to_file)
         from_file = @user+"@"+@host+":"+File.join(@path, sha)
-	`scp "#{from_file}" "#{to_file}"`
+	`scp #{@scpport} "#{from_file}" "#{to_file}"`
         if $? == 0
 	  puts sha+" downloaded"
           return true
@@ -48,7 +54,7 @@ module GitMedia
 
       def put_file(sha, from_file)
         to_file = @user+"@"+@host+":"+File.join(@path, sha)
-	`scp "#{from_file}" "#{to_file}"`
+	`scp #{@scpport} "#{from_file}" "#{to_file}"`
         if $? == 0
 	  puts sha+" uploaded"
           return true
