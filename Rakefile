@@ -5,7 +5,7 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "git-media"
-    gem.summary = %Q{TODO}
+    gem.summary = %Q{git-media}
     gem.email = "schacon@gmail.com"
     gem.homepage = "http://github.com/schacon/git-media"
     gem.authors = ["Scott Chacon"]

@@ -24,7 +24,8 @@ module GitMedia
   end
 
   def self.get_transport
-    case `git config git-media.transport`.chomp
+    transport = `git config git-media.transport`.chomp
+    case transport
     when ""
       raise "git-media.transport not set"
     when "scp"
@@ -63,6 +64,27 @@ module GitMedia
 	raise "git-media.s3secret not set for s3 transport"
       end
       GitMedia::Transport::S3.new(bucket, key, secret)
+    when "atmos"
+      require 'git-media/transport/atmos_client'
+      endpoint = `git config git-media.endpoint`.chomp
+      uid = `git config git-media.uid`.chomp
+      secret = `git config git-media.secret`.chomp
+      tag = `git config git-media.tag`.chomp
+
+      if endpoint == ""
+        raise "git-media.endpoint not set for atmos transport"
+      end
+
+      if uid == ""
+        raise "git-media.uid not set for atmos transport"
+      end
+
+      if secret == ""
+        raise "git-media.secret not set for atmos transport"
+      end
+      GitMedia::Transport::AtmosClient.new(endpoint, uid, secret, tag)
+    else
+      raise "Invalid transport #{transport}"
     end
   end
 

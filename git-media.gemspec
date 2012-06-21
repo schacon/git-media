@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{git-media}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Scott Chacon"]
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
      "lib/git-media/transport",
      "lib/git-media/transport/local.rb",
      "lib/git-media/transport/s3.rb",
+     "lib/git-media/transport/atmos_client.rb",
      "lib/git-media/transport/scp.rb",
      "lib/git-media/transport.rb",
      "lib/git-media.rb"
