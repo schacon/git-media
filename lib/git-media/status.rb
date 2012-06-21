@@ -10,7 +10,7 @@ module GitMedia
       r = self.local_cache_status
       self.print_cache_status(r)
     end
-    
+
     # find tree entries that are likely media references
     def self.find_references
       references = {:to_expand => [], :expanded => [], :deleted => []}
@@ -22,7 +22,7 @@ module GitMedia
           if size == tree_size.to_i
             # TODO: read in the data and verify that it's a sha + newline
             sha = File.read(fname).strip
-            if sha.length == 40
+            if sha.length == 40 && sha =~ /^[0-9a-f]+$/
               references[:to_expand] << [fname, sha]
             end
           else
@@ -48,14 +48,14 @@ module GitMedia
         puts "== Expanded Media =="
         refs[:expanded].each do |file|
           size = File.size(file)
-          puts "   " + "(#{self.to_human(size)})".ljust(8) + " #{file}"          
+          puts "   " + "(#{self.to_human(size)})".ljust(8) + " #{file}"
         end
         puts
       end
       if refs[:deleted].size > 0
         puts "== Deleted Media =="
         refs[:deleted].each do |file|
-          puts "           " + " #{file}"          
+          puts "           " + " #{file}"
         end
         puts
       end
@@ -76,7 +76,7 @@ module GitMedia
         refs[:pushed].each do |sha|
           cache_file = GitMedia.media_path(sha)
           size = File.size(cache_file)
-          puts "   " + "(#{self.to_human(size)})".ljust(8) + ' ' + sha[0, 8]          
+          puts "   " + "(#{self.to_human(size)})".ljust(8) + ' ' + sha[0, 8]
         end
         puts
       end
@@ -100,8 +100,8 @@ module GitMedia
         return (size / 1024).to_s + 'k'
       else
         return (size / 1048576).to_s + 'm'
-      end 
+      end
     end
-    
+
   end
 end
