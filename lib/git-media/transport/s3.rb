@@ -12,7 +12,7 @@ module GitMedia
 
       def initialize(bucket, access_key_id = nil, secret_access_key = nil)
         @s3 = RightAws::S3Interface.new(access_key_id, secret_access_key, 
-              {:multi_thread => true, :logger => Logger.new('/tmp/s3.log')})
+              {:multi_thread => true, :logger => Logger.new('~/.git-media.s3.log')})
         @bucket = bucket
         @buckets = @s3.list_all_my_buckets.map { |a| a[:name] }
         if !@buckets.include?(bucket)
