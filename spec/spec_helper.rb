@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'spec'
 require 'tempfile'
 require 'pp'
 
@@ -7,7 +6,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 require 'git-media'
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
 end
 
 def in_temp_git
@@ -24,12 +23,12 @@ end
 def in_temp_git_w_media
   bin = File.join(File.dirname(__FILE__), '..', 'bin', 'git-media')  
   in_temp_git do
-    append_file('testing1.mov', '1234567')
-    append_file('testing2.mov', '123456789')
+    append_file('testing1.x22', '1234567')
+    append_file('testing2.x22', '123456789')
     append_file('normal.txt', 'hello world')
-    append_file('.gitattributes', '*.mov filter=media')
-    `git config filter.media.clean "#{bin} clean"`
-    `git config filter.media.smudge "#{bin} smudge"`
+    append_file('.gitattributes', '*.x22 filter=media -crlf')
+    `git config filter.media.clean "#{bin} filter-clean"`
+    `git config filter.media.smudge "#{bin} filter-smudge"`
     yield
   end
 end

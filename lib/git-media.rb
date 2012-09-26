@@ -15,9 +15,9 @@ module GitMedia
 
   def self.media_path(sha)
     buf = self.get_media_buffer
-    File.join(buf, sha)    
+    File.join(buf, sha)
   end
-  
+
   # TODO: select the proper transports based on settings
   def self.get_push_transport
     self.get_transport
@@ -34,20 +34,20 @@ module GitMedia
       path = `git config git-media.scppath`.chomp
       port = `git config git-media.scpport`.chomp
       if user === ""
-	raise "git-media.scpuser not set for scp transport"
+        raise "git-media.scpuser not set for scp transport"
       end
       if host === ""
-	raise "git-media.scphost not set for scp transport"
+        raise "git-media.scphost not set for scp transport"
       end
       if path === ""
-	raise "git-media.scppath not set for scp transport"
+        raise "git-media.scppath not set for scp transport"
       end
       GitMedia::Transport::Scp.new(user, host, path, port)
 
     when "local"
       path = `git config git-media.localpath`.chomp
       if path === ""
-	raise "git-media.localpath not set for local transport"
+        raise "git-media.localpath not set for local transport"
       end
       GitMedia::Transport::Local.new(path)
     when "s3"
@@ -55,13 +55,13 @@ module GitMedia
       key = `git config git-media.s3key`.chomp
       secret = `git config git-media.s3secret`.chomp
       if bucket === ""
-	raise "git-media.s3bucket not set for s3 transport"
+        raise "git-media.s3bucket not set for s3 transport"
       end
       if key === ""
-	raise "git-media.s3key not set for s3 transport"
+        raise "git-media.s3key not set for s3 transport"
       end
       if secret === ""
-	raise "git-media.s3secret not set for s3 transport"
+        raise "git-media.s3secret not set for s3 transport"
       end
       GitMedia::Transport::S3.new(bucket, key, secret)
     when "atmos"
@@ -83,6 +83,21 @@ module GitMedia
         raise "git-media.secret not set for atmos transport"
       end
       GitMedia::Transport::AtmosClient.new(endpoint, uid, secret, tag)
+    when "drive"
+      require 'git-media/transport/drive'
+      email = `git config git-media.email`.chomp
+      asp = `git config git-media.asp`.chomp
+      collection = `git config git-media.collection`.chomp
+      if email == ""
+        raise "git-media.email not set for drive transport"
+      end
+      if asp == ""
+        raise "git-media.asp (application specific password) not set for drive transport"
+      end
+      if collection == ""
+        raise "git-media.collection not set for drive transport"
+      end
+      GitMedia::Transport::Drive.new(email, asp, collection)
     else
       raise "Invalid transport #{transport}"
     end
@@ -94,7 +109,7 @@ module GitMedia
 
   module Application
     def self.run!
-      
+
       cmd = ARGV.shift # get the subcommand
       cmd_opts = case cmd
         when "filter-clean" # parse delete options
@@ -125,7 +140,7 @@ usage: git media sync|status|clear
 
 EOF
         end
-      
+
     end
   end
 end

@@ -11,8 +11,8 @@ module GitMedia
     class S3 < Base
 
       def initialize(bucket, access_key_id = nil, secret_access_key = nil)
-        @s3 = RightAws::S3Interface.new(access_key_id, secret_access_key, 
-              {:multi_thread => true, :logger => Logger.new('/tmp/s3.log')})
+        @s3 = RightAws::S3Interface.new(access_key_id, secret_access_key,
+              {:multi_thread => true, :logger => Logger.new(File.expand_path('~/.git-media.s3.log'))})
         @bucket = bucket
         @buckets = @s3.list_all_my_buckets.map { |a| a[:name] }
         if !@buckets.include?(bucket)
@@ -31,7 +31,7 @@ module GitMedia
         to = File.new(to_file, File::CREAT|File::RDWR)
         @s3.get(@bucket, sha) do |chunk|
           to.write(chunk)
-        end 
+        end
         to.close
       end
 

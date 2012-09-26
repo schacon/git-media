@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{git-media}
-  s.version = "0.1.2"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Scott Chacon"]
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
      "lib/git-media/transport/s3.rb",
      "lib/git-media/transport/atmos_client.rb",
      "lib/git-media/transport/scp.rb",
+     "lib/git-media/transport/drive.rb",
      "lib/git-media/transport.rb",
      "lib/git-media.rb"
   ]
@@ -42,6 +43,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{"This is a summary! Stop yer whining"}
+
+  s.add_dependency 'trollop'
+  s.add_dependency 's3'
+  s.add_dependency 'ruby-atmos-pure'
+  s.add_dependency 'right_aws'
+  s.add_development_dependency 'jeweler'
+  s.add_development_dependency 'rspec'
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
