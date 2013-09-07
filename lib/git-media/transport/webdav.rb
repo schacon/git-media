@@ -1,10 +1,10 @@
 require 'git-media/transport'
 
 # move large media to local bin
-
-# git-media.transport wedav
-
-# git-media. webdav stuff
+# git-media.transport webdav
+# git-media.webdavurl
+# git-media.webdavusername
+# git-media.webdavpassword
 
 module GitMedia
   module Transport
