@@ -1,4 +1,5 @@
 require 'git-media/transport'
+require 'net/dav'
 
 # move large media to local bin
 # git-media.transport webdav
