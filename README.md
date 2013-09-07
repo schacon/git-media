@@ -34,7 +34,7 @@ or in `clone/.git/config` (for per-repo settings).
 
 ```gitconfig
 [git-media]
-	transport = <scp|local|s3|atmos>
+	transport = <scp|local|webdav|s3|atmos>
 
 	# settings for scp transport
 	scpuser=<user>
@@ -43,6 +43,11 @@ or in `clone/.git/config` (for per-repo settings).
 
 	# settings for local transport
 	localpath=<local_filesystem_path>
+
+	# settings for webdav transport
+	webdavurl=<webdav_url>
+	webdavusername=<webdav_username>
+	webdavpassword=<webdav_password>
 
 	# settings for s3 transport
 	s3bucket=<name_of_bucket>
@@ -80,11 +85,12 @@ that is. If you want to upload & delete the local cache of media files, run:
 ## Installing
 
   $ sudo gem install trollop
+  $ sudo gem install net_dav
   $ sudo gem install s3
   $ sudo gem install ruby-atmos-pure
   $ sudo gem install right_aws
   $ gem build git-media.gemspec
-  $ sudo gem install git-media-0.1.1.gem
+  $ sudo gem install git-media-0.1.2.gem
 
 ## Notes for Windows
 
