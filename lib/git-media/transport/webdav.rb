@@ -16,27 +16,34 @@ module GitMedia
 	@password = password
       end
 
+      def exist?(file)
+	@webdav.exists?(file)
+      end
+
       def read?
-        File.exist?(@path)
+        @webdav.exists?(file)
       end
 
       def get_file(sha, to_file)
-        from_file = File.join(@path, sha)
-        if File.exists?(from_file)
-          FileUtils.cp(from_file, to_file)
+	dest_file = File.new(to_file, File::CREAT|File::RDWR)
+	if sha.exist?
+	  @webdav.get(sha) do |stream|
+	    dest_file.write(stream)
+	  end
+	  dest_file.close
           return true
         end
         return false
       end
 
       def write?
-        File.exist?(@path)
+        @webdav.exists?(file)
       end
 
       def put_file(sha, from_file)
-        to_file = File.join(@path, sha)
         if File.exists?(from_file)
-          FileUtils.cp(from_file, to_file)
+          File.open(from_file, r) do |stream|
+	    @webdav.put(sha, stream, File.size(from_file))
           return true
         end
         return false
@@ -44,7 +51,7 @@ module GitMedia
       
       def get_unpushed(files)
         files.select do |f|
-          !File.exist?(File.join(@path, f))
+          !File.exist?(f)
         end
       end
       
