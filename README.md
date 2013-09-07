@@ -37,28 +37,28 @@ or in `clone/.git/config` (for per-repo settings).
 	transport = <scp|local|webdav|s3|atmos>
 
 	# settings for scp transport
-	scpuser=<user>
-	scphost=<host>
-	scppath=<path_on_remote_server>
+	scpuser = <user>
+	scphost = <host>
+	scppath = <path_on_remote_server>
 
 	# settings for local transport
-	localpath=<local_filesystem_path>
+	path = <local_filesystem_path>
 
 	# settings for webdav transport
-	webdavurl=<webdav_url>
-	webdavusername=<webdav_username>
-	webdavpassword=<webdav_password>
+	webdavurl      = <webdav_url>
+	webdavusername = <webdav_username>
+	webdavpassword = <webdav_password>
 
 	# settings for s3 transport
-	s3bucket=<name_of_bucket>
-	s3key=<s3 access key>
-	s3secret=<s3 secret key>
+	s3bucket = <name_of_bucket>
+	s3key    = <s3 access key>
+	s3secret = <s3 secret key>
 
 	# settings for atmos transport
-	endpoint=<atmos server>
-	uid=<atmos_uid>
-	secret=<atmos secret key>
-	tag=<atmos object tag>
+	endpoint = <atmos server>
+	uid      = <atmos_uid>
+	secret   = <atmos secret key>
+	tag      = <atmos object tag>
 ```
 
 
@@ -84,15 +84,16 @@ that is. If you want to upload & delete the local cache of media files, run:
 
 ## Installing
 
-  $ sudo gem install trollop
+    $ sudo gem install trollop
   $ sudo gem install net_dav
-  $ sudo gem install s3
-  $ sudo gem install ruby-atmos-pure
-  $ sudo gem install right_aws
-  $ gem build git-media.gemspec
+    $ sudo gem install s3
+    $ sudo gem install ruby-atmos-pure
+    $ sudo gem install right_aws
+    $ gem build git-media.gemspec
   $ sudo gem install git-media-0.1.2.gem
 
 ## Notes for Windows
+
 
 It is important to switch off git smart newline character support for media files.
 Use `-crlf` switch in `.gitattributes` (for example `*.mov filter=media -crlf`) or config option `core.autocrlf = false`.
