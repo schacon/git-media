@@ -85,12 +85,12 @@ that is. If you want to upload & delete the local cache of media files, run:
 ## Installing
 
     $ sudo gem install trollop
-  $ sudo gem install net_dav
+    $ sudo gem install net_dav
     $ sudo gem install s3
     $ sudo gem install ruby-atmos-pure
     $ sudo gem install right_aws
     $ gem build git-media.gemspec
-  $ sudo gem install git-media-0.1.2.gem
+    $ sudo gem install git-media-0.1.2.gem
 
 ## Notes for Windows
 
