@@ -46,8 +46,8 @@ module GitMedia
       GitMedia::Transport::Scp.new(user, host, path, port)
 
     when "webdav"
-      user = `git config git-media.webdavusername`.chomp
-      if user === ""
+      username = `git config git-media.webdavusername`.chomp
+      if username === ""
 	raise "git-media.webdavusername not set for webdav transport"
       end
       password = `git config git-media.webdavpassword`.chomp
