@@ -15,6 +15,8 @@ module GitMedia
         @url = url
         @username = username
         @password = password
+	@webdav = Net::DAV.new(url)
+        @webdav.credentials(@username, @password)
       end
 
       def exist?(file)
