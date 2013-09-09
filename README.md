@@ -22,12 +22,13 @@ are uploaded.  Checkouts that reference media you don't have yet will try to
 be automatically downloaded, otherwise they are downloaded when you sync.
 
 Next you need to configure git to tell it where you want to store the large files.
-There are four options:
+Here are the options:
 
-1. Storing remotely in Amazon's S3
-2. Storing locally in a filesystem path
-3. Storing remotely via SCP (should work with any SSH server)
-4. Storing remotely in atmos
+1. Storing locally in a filesystem path
+2. Storing remotely via SCP (should work with any SSH server)
+3. Storing remotely via WEBDAV (including SSL enabled servers)
+4. Storing remotely in Amazon's S3
+5. Storing remotely in atmos
 
 Here are the relevant sections that should go either in `~/.gitconfig` (for global settings)
 or in `clone/.git/config` (for per-repo settings).
@@ -61,7 +62,6 @@ or in `clone/.git/config` (for per-repo settings).
 	tag      = <atmos object tag>
 ```
 
-
 ## Usage
 
 	(in repo - repeatedly)
@@ -81,7 +81,6 @@ that is. If you want to upload & delete the local cache of media files, run:
 
 	$ git config --global media.auto-download false
 
-
 ## Installing
 
     $ sudo gem install trollop
@@ -93,7 +92,6 @@ that is. If you want to upload & delete the local cache of media files, run:
     $ sudo gem install git-media-0.1.2.gem
 
 ## Notes for Windows
-
 
 It is important to switch off git smart newline character support for media files.
 Use `-crlf` switch in `.gitattributes` (for example `*.mov filter=media -crlf`) or config option `core.autocrlf = false`.
