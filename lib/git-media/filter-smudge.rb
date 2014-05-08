@@ -33,7 +33,6 @@ module GitMedia
               STDERR.puts('media file not found : ' + cache_file)
             end
           
-          #sin end editing
           end
         end
       else
