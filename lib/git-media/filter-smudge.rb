@@ -47,7 +47,7 @@ module GitMedia
     
     def self.recover_media(media_file,sha)
       STDERR.puts('recovering media : ' + sha)
-        File.open(media_file, 'rb') do |f|
+        File.open(media_file, 'r') do |f|
           while data = f.read(4096) do
             print data
           end
