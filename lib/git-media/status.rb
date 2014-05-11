@@ -1,4 +1,5 @@
 require 'pp'
+Encoding.default_external = Encoding::UTF_8
 
 module GitMedia
   module Status
