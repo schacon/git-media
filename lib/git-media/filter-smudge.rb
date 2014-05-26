@@ -27,10 +27,12 @@ module GitMedia
                 self.recover_media(media_file,sha)
               else
                 STDERR.puts('downloading media failed : ' + cache_file)
+                STDOUT.binmode 
                 puts sha
               end              
             else
               STDERR.puts('media file not found : ' + cache_file)
+              STDOUT.binmode 
               puts sha             
             end          
           end
