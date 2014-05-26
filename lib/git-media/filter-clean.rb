@@ -12,11 +12,23 @@ module GitMedia
       hashfunc = Digest::SHA1.new
       start = Time.now
 
-      # TODO: read first 41 bytes and see if this is a stub
-      
+      #read first 41 bytes and see if this is a stub
+      possible_sha = STDIN.read(64) # read no more than 64 bytes
+      possible_sha_strip = possible_sha.strip
+      if STDIN.eof? && possible_sha_strip.length == 40 && possible_sha_strip.match(/^[0-9a-fA-F]+$/) != nil
+        # STUB
+        STDOUT.print(possible_sha)
+        STDOUT.binmode
+        STDERR.puts("Media not downloaded yet: " + possible_sha)
+        return
+      end      
+
       # read in buffered chunks of the data
       #  calculating the SHA and copying to a tempfile
       tempfile = Tempfile.new('media')
+      tempfile.binmode      
+      hashfunc.update(possible_sha)
+      tempfile.write(possible_sha)      
       while data = STDIN.read(4096)
         hashfunc.update(data)
         tempfile.write(data)
