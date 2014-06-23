@@ -109,6 +109,9 @@ module GitMedia
         when "sync"
           require 'git-media/sync'
           GitMedia::Sync.run!
+        when "download"
+          require 'git-media/sync'
+          GitMedia::Sync.run! :download_only => true
         when 'status'
           require 'git-media/status'
           Trollop::options do
@@ -117,12 +120,12 @@ module GitMedia
           GitMedia::Status.run!
         else
 	  print <<EOF
-usage: git media sync|status|clear
+usage: git media sync|download|status|clear
 
-  sync		Sync files with remote server
-  status	Show files that are waiting to be uploaded and file size
-  clear		Upload and delete the local cache of media files
-
+  sync     Sync files with remote server
+  download Download files that are missing; don't upload any files
+  status   Show files that are waiting to be uploaded and file size
+  clear    Upload and delete the local cache of media files
 EOF
         end
       

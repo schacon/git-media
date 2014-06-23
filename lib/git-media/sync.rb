@@ -5,12 +5,15 @@ require 'git-media/status'
 module GitMedia
   module Sync
 
-    def self.run!
+    def self.run!(options={})
       @push = GitMedia.get_push_transport
       @pull = GitMedia.get_pull_transport
       
       self.expand_references
-      self.upload_local_cache
+
+      if !options.has_key?(:download_only)
+        self.upload_local_cache
+      end
     end
     
     def self.expand_references
