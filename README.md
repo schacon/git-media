@@ -42,7 +42,7 @@ or in `clone/.git/config` (for per-repo settings).
 	scppath = <path_on_remote_server>
 
 	# settings for local transport
-	path = <local_filesystem_path>
+	localpath = <local_filesystem_path>
 
 	# settings for s3 transport
 	s3bucket = <name_of_bucket>
