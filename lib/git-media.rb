@@ -1,6 +1,7 @@
 require 'trollop'
 require 'fileutils'
 require 'git-media/transport/local'
+require 'git-media/transport/webdav'
 require 'git-media/transport/s3'
 require 'git-media/transport/scp'
 
@@ -44,12 +45,28 @@ module GitMedia
       end
       GitMedia::Transport::Scp.new(user, host, path, port)
 
+    when "webdav"
+      username = `git config git-media.webdavusername`.chomp
+      if username === ""
+	raise "git-media.webdavusername not set for webdav transport"
+      end
+      password = `git config git-media.webdavpassword`.chomp
+      if password === ""
+	raise "git-media.webdavpassword not set for webdav transport"
+      end
+      url = `git config git-media.webdavurl`.chomp
+      if url === ""
+	raise "git-media.webdavurl not set for webdav transport"
+      end
+      GitMedia::Transport::Webdav.new(url, username, password)
+
     when "local"
       path = `git config git-media.localpath`.chomp
       if path === ""
 	raise "git-media.localpath not set for local transport"
       end
       GitMedia::Transport::Local.new(path)
+
     when "s3"
       bucket = `git config git-media.s3bucket`.chomp
       key = `git config git-media.s3key`.chomp
@@ -64,6 +81,7 @@ module GitMedia
 	raise "git-media.s3secret not set for s3 transport"
       end
       GitMedia::Transport::S3.new(bucket, key, secret)
+
     when "atmos"
       require 'git-media/transport/atmos_client'
       endpoint = `git config git-media.endpoint`.chomp

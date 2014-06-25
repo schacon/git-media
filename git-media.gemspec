@@ -30,6 +30,7 @@ Gem::Specification.new do |s|
      "lib/git-media/sync.rb",
      "lib/git-media/transport",
      "lib/git-media/transport/local.rb",
+     "lib/git-media/transport/webdav.rb",
      "lib/git-media/transport/s3.rb",
      "lib/git-media/transport/atmos_client.rb",
      "lib/git-media/transport/scp.rb",
