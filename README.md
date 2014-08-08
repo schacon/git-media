@@ -84,7 +84,7 @@ that is. If you want to upload & delete the local cache of media files, run:
     $ sudo gem install ruby-atmos-pure
     $ sudo gem install right_aws
     $ gem build git-media.gemspec
-    $ sudo gem install git-media-0.1.1.gem
+    $ sudo gem install git-media-0.1.2.gem
 
 ## Notes for Windows
 
