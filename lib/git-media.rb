@@ -1,4 +1,12 @@
+require 'rubygems'
+require 'bundler/setup'
+
 require 'trollop'
+#require 's3'
+#require 'ruby-atmos-pure'
+#require 'right_aws'
+#require 'net/dav'
+
 require 'fileutils'
 require 'git-media/transport/local'
 require 'git-media/transport/s3'
@@ -15,9 +23,9 @@ module GitMedia
 
   def self.media_path(sha)
     buf = self.get_media_buffer
-    File.join(buf, sha)    
+    File.join(buf, sha)
   end
-  
+
   # TODO: select the proper transports based on settings
   def self.get_push_transport
     self.get_transport
@@ -83,6 +91,23 @@ module GitMedia
         raise "git-media.secret not set for atmos transport"
       end
       GitMedia::Transport::AtmosClient.new(endpoint, uid, secret, tag)
+    when "webdav"
+      require 'git-media/transport/webdav'
+      url = `git config git-media.webdavurl`.chomp
+      user = `git config git-media.webdavuser`.chomp
+      password = `git config git-media.webdavpassword`.chomp
+      verify_server = `git config git-media.webdavverifyserver`.chomp == 'true'
+      binary_transfer = `git config git-media.webdavbinarytransfer`.chomp == 'true'
+      if url == ""
+        raise "git-media.webdavurl not set for webdav transport"
+      end
+      if user == ""
+        raise "git-media.webdavuser not set for webdav transport"
+      end
+      if password == ""
+        raise "git-media.webdavpassword not set for webdav transport"
+      end
+      GitMedia::Transport::WebDav.new(url, user, password, verify_server, binary_transfer)
     else
       raise "Invalid transport #{transport}"
     end
@@ -94,7 +119,7 @@ module GitMedia
 
   module Application
     def self.run!
-      
+
       cmd = ARGV.shift # get the subcommand
       cmd_opts = case cmd
         when "filter-clean" # parse delete options
@@ -115,6 +140,9 @@ module GitMedia
             opt :force, "Force status"
           end
           GitMedia::Status.run!
+        when 'update-index'
+          require 'git-media/update-index'
+          GitMedia::UpdateIndex.run!
         else
 	  print <<EOF
 usage: git media sync|status|clear
@@ -125,7 +153,7 @@ usage: git media sync|status|clear
 
 EOF
         end
-      
+
     end
   end
 end

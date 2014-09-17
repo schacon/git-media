@@ -22,19 +22,20 @@ are uploaded.  Checkouts that reference media you don't have yet will try to
 be automatically downloaded, otherwise they are downloaded when you sync.
 
 Next you need to configure git to tell it where you want to store the large files.
-There are four options:
+There are five options:
 
 1. Storing remotely in Amazon's S3
 2. Storing locally in a filesystem path
 3. Storing remotely via SCP (should work with any SSH server)
 4. Storing remotely in atmos
+5. Storing remotely via WebDav
 
 Here are the relevant sections that should go either in `~/.gitconfig` (for global settings)
 or in `clone/.git/config` (for per-repo settings).
 
 ```ini
 [git-media]
-	transport = <scp|local|s3|atmos>
+	transport = <scp|local|s3|atmos|webdav>
 
 	# settings for scp transport
 	scpuser = <user>
@@ -54,6 +55,15 @@ or in `clone/.git/config` (for per-repo settings).
 	uid      = <atmos_uid>
 	secret   = <atmos secret key>
 	tag      = <atmos object tag>
+
+	# settings for webdav transport
+	webdavurl = <webdav root url>
+	webdavuser = <user for basic auth>
+	webdavpassword = <password for basic auth>
+	webdavverifyserver = <Net::Dav.verify_server setting, true by default>
+	webdavbinarytransfer = <Net::Dav.new :curl option value, false by default>
+
+
 ```
 
 
@@ -83,8 +93,9 @@ that is. If you want to upload & delete the local cache of media files, run:
     $ sudo gem install s3
     $ sudo gem install ruby-atmos-pure
     $ sudo gem install right_aws
+    $ sudo gem install net_dav
     $ gem build git-media.gemspec
-    $ sudo gem install git-media-0.1.1.gem
+    $ sudo gem install git-media-0.1.3.gem
 
 ## Notes for Windows
 

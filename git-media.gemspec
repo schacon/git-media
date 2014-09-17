@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{git-media}
-  s.version = "0.1.2"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Scott Chacon"]
@@ -28,11 +28,13 @@ Gem::Specification.new do |s|
      "lib/git-media/filter-smudge.rb",
      "lib/git-media/status.rb",
      "lib/git-media/sync.rb",
+     "lib/git-media/update-index.rb",
      "lib/git-media/transport",
      "lib/git-media/transport/local.rb",
      "lib/git-media/transport/s3.rb",
      "lib/git-media/transport/atmos_client.rb",
      "lib/git-media/transport/scp.rb",
+     "lib/git-media/transport/webdav.rb",
      "lib/git-media/transport.rb",
      "lib/git-media.rb"
   ]
